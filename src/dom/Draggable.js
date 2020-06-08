@@ -46,7 +46,10 @@ export var Draggable = Evented.extend({
 		// for it to be considered a valid click (as opposed to a mouse drag).
 		clickTolerance: 3
 	},
-
+	_rotate: 0,
+	setRotate: function(rotate) {
+		this._rotate = rotate;
+	},
 	// @constructor L.Draggable(el: HTMLElement, dragHandle?: HTMLElement, preventOutline?: Boolean, options?: Draggable options)
 	// Creates a `Draggable` object for moving `el` when you start dragging the `dragHandle` element (equals `el` itself by default).
 	initialize: function (element, dragStartTarget, preventOutline, options) {
@@ -148,6 +151,11 @@ export var Draggable = Evented.extend({
 		// and we can use the cached value for the scale.
 		offset.x /= this._parentScale.x;
 		offset.y /= this._parentScale.y;
+
+		// 在offset时引入角度变量
+		var rad = this._rotate / 180 * Math.PI;
+		offset.x = Math.cos(rad) * x + Math.sin(rad) * y;
+		offset.y = Math.cos(rad) * y - Math.sin(rad) * x;
 
 		DomEvent.preventDefault(e);
 

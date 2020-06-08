@@ -30,7 +30,6 @@ import {PosAnimation} from '../dom/PosAnimation';
  */
 
 export var Map = Evented.extend({
-
 	options: {
 		// @section Map State Options
 		// @option crs: CRS = L.CRS.EPSG3857
